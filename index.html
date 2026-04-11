@@ -28,6 +28,7 @@
     var preferred = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     setTheme(preferred);
     startGalleries();
+    setupMobileMenu();
   });
 
   var _galleries = {};
@@ -61,6 +62,37 @@
       });
       var timer = setInterval(function () { _applySlide(id, (_galleries[id].current + 1) % imgs.length); }, 4000);
       _galleries[id].timer = timer;
+    });
+  }
+
+  function setupMobileMenu() {
+    var nav = document.querySelector('nav');
+    var hamburger = document.querySelector('.hamburger');
+    var links = document.querySelector('.nav-links');
+    if (!nav || !hamburger || !links) return;
+
+    hamburger.setAttribute('aria-expanded', 'false');
+
+    function closeMenu() {
+      nav.classList.remove('menu-open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    }
+
+    hamburger.addEventListener('click', function () {
+      var open = nav.classList.toggle('menu-open');
+      hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    links.querySelectorAll('button, a').forEach(function (el) {
+      el.addEventListener('click', closeMenu);
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!nav.contains(e.target)) closeMenu();
+    });
+
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 900) closeMenu();
     });
   }
 </script>
@@ -621,6 +653,7 @@
     font-size: 0.9rem; font-weight: 300; padding: 0.9rem 1rem;
     outline: none; transition: border-color 0.2s;
     -webkit-appearance: none;
+    appearance: none;
   }
   .form-group input::placeholder,
   .form-group textarea::placeholder { color: var(--muted); }
@@ -667,6 +700,33 @@
     .nav-links, .nav-cta { display: none; }
     .hamburger { display: flex; }
     nav { padding: 0.14rem 4%; }
+    nav.menu-open .nav-links {
+      display: flex;
+      position: absolute;
+      top: calc(100% + 0.4rem);
+      left: 4%;
+      right: 4%;
+      flex-direction: column;
+      gap: 0.3rem;
+      padding: 0.8rem;
+      background: rgba(12,12,11,0.95);
+      border: 0.5px solid var(--border);
+      backdrop-filter: blur(12px);
+      z-index: 120;
+    }
+    nav.menu-open .nav-links button,
+    nav.menu-open .nav-links a {
+      text-align: left;
+      width: 100%;
+      padding: 0.7rem 0.5rem;
+      border-bottom: 0.5px solid var(--border);
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+    }
+    nav.menu-open .nav-links li:last-child button,
+    nav.menu-open .nav-links li:last-child a {
+      border-bottom: none;
+    }
     .hero-content { padding-top: 1.8rem; }
     .about-grid, .why-grid, .contact-grid, .csr-inner { grid-template-columns: 1fr; gap: 3rem; }
     .about-img-badge { left: 0; }
