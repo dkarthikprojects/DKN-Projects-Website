@@ -158,6 +158,12 @@
     background: none; border: none; cursor: pointer; font-family: 'Outfit', sans-serif;
   }
   .nav-links a:hover, .nav-links button:hover { color: var(--gold); }
+  .nav-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.45rem;
+  }
   .nav-cta {
     font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em;
     text-transform: uppercase; color: var(--dark);
@@ -834,8 +840,10 @@
     <li><button onclick="scrollToSection('csr')">CSR</button></li>
     <li><button onclick="scrollToSection('contact')">Contact</button></li>
   </ul>
-  <button class="theme-toggle" onclick="toggleTheme()">Light Mode</button>
-  <button class="nav-cta" onclick="scrollToSection('contact')">Get a Quote</button>
+  <div class="nav-actions">
+    <button class="nav-cta" onclick="scrollToSection('contact')">Get a Quote</button>
+    <button class="theme-toggle" onclick="toggleTheme()">Light Mode</button>
+  </div>
   <button class="hamburger" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
@@ -1071,11 +1079,11 @@
       <div class="contact-detail">
         <div class="contact-item">
           <label>Phone</label>
-          <span>+91 XXXXX XXXXX</span>
+          <span>+91 9121008609</span>
         </div>
         <div class="contact-item">
           <label>Email</label>
-          <span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="acc5c2cac3ecc8c7c2dcdec3c6c9cfd8df82cfc3c1">[email&#160;protected]</a></span>
+          <span><a href="mailto:dmrb12345@gmail.com">dmrb12345@gmail.com</a></span>
         </div>
         <div class="contact-item">
           <label>Location</label>
